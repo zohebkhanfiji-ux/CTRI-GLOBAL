@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import MotionToggle from '../components/motion-toggle';
+import SystemExplorer from '../components/system-explorer';
 import { groups, pages } from './site-data';
 
 const chapters = [
@@ -15,6 +16,7 @@ export default function Home() {
       <div className="hero-image" aria-hidden="true" />
       <div className="hero-orbit orbit-one" aria-hidden="true" />
       <div className="hero-orbit orbit-two" aria-hidden="true" />
+      <div className="hero-coordinate" aria-hidden="true"><span>EARTH / ENERGY</span><span>CONNECTED SYSTEMS</span></div>
       <div className="hero-content shell">
         <p className="eyebrow light">CTRI GLOBAL <span className="eyebrow-line" /> A CENTAURI PERSPECTIVE</p>
         <h1 id="hero-title">A new perspective<br /><em>on what comes next.</em></h1>
@@ -22,6 +24,7 @@ export default function Home() {
         <div className="hero-actions"><Link className="button button-primary" href="/explore/integrated-energy">Explore the system <span aria-hidden="true">↗</span></Link><Link className="text-link light-link" href="/explore/company">Our perspective <span aria-hidden="true">↗</span></Link></div>
       </div>
       <div className="hero-bottom shell"><span>01 / 04 — THE CONNECTED VIEW</span><span>SCROLL TO EXPLORE ↓</span><MotionToggle /></div>
+      <p className="hero-visual-note">Conceptual visualization · not a project photograph</p>
     </section>
 
     <section className="statement section-pad shell" aria-labelledby="statement-title">
@@ -33,7 +36,7 @@ export default function Home() {
 
     <section className="chapters section-pad shell" aria-labelledby="chapters-title"><div className="section-heading"><div><p className="eyebrow">EXPLORE OUR WORLD</p><h2 id="chapters-title">The chapters.</h2></div><p>Move from the full system to the details that make it work.</p></div><div className="chapter-grid">{chapters.map((item) => <Link key={item.label} href={item.href} className="chapter-card"><div className="chapter-image"><Image src={item.image} alt="" fill sizes="(max-width: 720px) 100vw, 33vw" className="cover-image" /></div><div className="chapter-meta"><span>{item.label}</span><span aria-hidden="true">↗</span></div><h3>{item.title}</h3><p>{item.copy}</p></Link>)}</div></section>
 
-    <section className="system-strip" aria-labelledby="system-title"><div className="shell system-layout"><div className="system-intro"><p className="eyebrow light">A CONNECTED FRAMEWORK</p><h2 id="system-title">See how the pieces fit.</h2><p>Four areas of inquiry. One wider view.</p></div><div className="system-steps">{['Generation', 'Storage', 'Infrastructure', 'Stewardship'].map((title, i) => <Link key={title} href={['/explore/solar', '/explore/storage', '/explore/infrastructure', '/explore/climate'][i]}><span>0{i+1}</span><strong>{title}</strong><span aria-hidden="true">↗</span></Link>)}</div></div></section>
+    <SystemExplorer />
 
     <section className="index-section section-pad shell" aria-labelledby="index-title"><div className="section-heading"><div><p className="eyebrow">THE FULL PICTURE</p><h2 id="index-title">Explore every dimension.</h2></div><p>A clear route through the themes behind the CTRI Global story.</p></div><div className="index-grid">{groups.map(group => <div className="index-group" key={group.label}><h3>{group.label}</h3>{group.items.map(slug => <Link key={slug} href={'/explore/'+slug}>{pages[slug].title}<span aria-hidden="true">↗</span></Link>)}</div>)}</div></section>
 
