@@ -1,0 +1,13 @@
+/* Text identity correction only; existing symbol, imagery and palette are retained. */
+.corporate-wordmark{flex-shrink:0;line-height:1.05;letter-spacing:.1em}
+.corporate-wordmark strong{font-weight:800;font-size:22px}
+.corporate-wordmark small{font-size:9px;letter-spacing:.13em;line-height:1.3;margin-top:6px}
+.corporate-footer-brand{display:inline-block;line-height:1.15;max-width:100%;white-space:normal}
+.corporate-footer-brand strong{color:inherit!important;font-size:28px;letter-spacing:.1em}
+.corporate-footer-brand span{font-size:11px;letter-spacing:.13em;line-height:1.4}
+.manufacturing-scope{border-top:1px solid var(--line)}
+.manufacturing-scope .scope-intro{max-width:800px;font-size:19px;line-height:1.6;color:var(--muted)}
+.manufacturing-scope .principle-grid h3{overflow-wrap:break-word}
+.manufacturing-scope .release-note{max-width:960px;font-size:14px;line-height:1.65;margin-top:32px;color:var(--muted)}
+.manufacturing-scope .text-link{margin-top:10px}
+@media(max-width:720px){.corporate-wordmark strong{font-size:19px}.corporate-wordmark small{font-size:8px;letter-spacing:.09em}.corporate-footer-brand strong{font-size:24px}.corporate-footer-brand span{font-size:10px}}

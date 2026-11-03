@@ -1,10 +1,11 @@
-name: CTRI Global quality gate
+name: CRC corporate website quality gate
 on:
   pull_request:
   push:
     branches:
       - main
       - audit/ctri-production-gates-2026-11-02
+      - fix/crc-brand-manufacturing-20261102
 permissions:
   contents: read
 jobs:
@@ -23,7 +24,9 @@ jobs:
         run: npm ci
       - name: Production dependency security scan
         run: npm run audit:ci
-      - name: Editorial unit tests
+      - name: Editorial and corporate identity unit tests
         run: npm test
       - name: Production build with release gates retained
         run: npm run build
+      - name: Production HTTP identity and route regression checks
+        run: node scripts/smoke-corporate.mjs
