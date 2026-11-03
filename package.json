@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test",
+    "audit:ci": "npm audit --omit=dev --audit-level=high"
   },
   "dependencies": {
-    "next": "16.3.6",
+    "next": "16.4.4",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

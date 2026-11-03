@@ -2,16 +2,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { groups, pages } from '../../site-data';
+import { getEditorialPage } from '../../../lib/sanity-editorial';
 
 export function generateStaticParams() { return Object.keys(pages).map(slug => ({ slug })); }
 export async function generateMetadata({ params }) {
-  const { slug } = await params; const item = pages[slug];
-  return item ? { title: item.title + ' | CTRI Global', description: item.lead } : {};
+  const { slug } = await params;
+  if (!pages[slug]) return {};
+  const item = await getEditorialPage(slug, pages[slug]);
+  return { title: item.title + ' | CTRI Global', description: item.lead, robots: { index: false, follow: false } };
 }
 export default async function ExplorePage({ params }) {
   const { slug } = await params;
-  const item = pages[slug];
-  if (!item) notFound();
+  if (!pages[slug]) notFound();
+  const item = await getEditorialPage(slug, pages[slug]);
   const group = groups.find(g => g.items.includes(slug));
   const siblings = group.items.filter(s => s !== slug);
   return <main id="main" className="interior">
