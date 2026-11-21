@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { getPreviewSitemap, getCorporateSchema, getIndexingReadiness } from '../lib/seo-contracts.mjs';
@@ -24,4 +25,11 @@ test('schema uses verified company name without unsupported affiliation',()=>{
   assert.equal(readiness.migrationReady,false);
   assert.equal(readiness.googleSearchConsoleVerified,false);
   assert.equal(readiness.bingWebmasterVerified,false);
+});
+
+test('structured search identity is wired while search indexing remains disabled',()=>{
+  const code=readFileSync(new URL('../app/layout.js',import.meta.url),'utf8');
+  assert.match(code,/getCorporateSchema\(\)/);
+  assert.match(code,/application\/ld\+json/);
+  assert.match(code,/index: false, follow: false/);
 });
