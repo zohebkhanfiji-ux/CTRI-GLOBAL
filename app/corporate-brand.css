@@ -11,3 +11,20 @@
 .manufacturing-scope .release-note{max-width:960px;font-size:14px;line-height:1.65;margin-top:32px;color:var(--muted)}
 .manufacturing-scope .text-link{margin-top:10px}
 @media(max-width:720px){.corporate-wordmark strong{font-size:19px}.corporate-wordmark small{font-size:8px;letter-spacing:.09em}.corporate-footer-brand strong{font-size:24px}.corporate-footer-brand span{font-size:10px}}
+
+
+/* Additional corporate division directory: accessible, responsive and static-first. */
+.division-hero{background:radial-gradient(circle at 82% 30%,#234a74 0%,transparent 52%),linear-gradient(135deg,#041223,#102e4f);}
+.division-directory{display:grid;gap:30px}
+.division-directory-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,.78fr);gap:clamp(28px,6vw,90px);padding:40px 0;border-top:1px solid var(--line)}
+.division-directory-card h3{font-size:clamp(32px,4vw,60px);font-weight:500;line-height:1.07;margin:18px 0}
+.division-directory-card p:not(.eyebrow){max-width:680px;line-height:1.65;color:var(--muted)}
+.division-directory-flow{border-left:2px solid var(--orange);padding-left:24px;align-self:start}
+.division-directory-flow>strong{display:block;font-size:15px;margin-bottom:16px}
+.division-directory-flow ol{padding-left:20px;margin:0 0 20px;display:grid;gap:10px;font-size:14px;line-height:1.5}
+.division-directory-flow .muted-copy{font-size:13px}
+.division-boundary{padding:100px 0;background:var(--navy);color:white}
+.division-boundary h2{max-width:800px}
+.division-boundary p:not(.eyebrow){max-width:800px;font-size:18px;line-height:1.65;color:#d5e1eb}
+.division-boundary .division-boundary-note{font-size:13px!important;color:#c4d2dd!important;margin:24px 0 28px}
+@media(max-width:800px){.division-directory-card{grid-template-columns:1fr}.division-directory-flow{border-left:0;border-top:2px solid var(--orange);padding:20px 0 0}.division-boundary{padding:70px 0}}
