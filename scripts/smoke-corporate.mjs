@@ -42,13 +42,36 @@ try {
   assert.match(divisionsHtml, /Centauri Renewables Corporation/);
   assert.match(divisionsHtml, /Mutual Moon/);
   assert.match(divisionsHtml, /not yet active/i);
+  for (const path of ['/solutions','/contact']) {
+    const response = await fetch(base + path,{signal:AbortSignal.timeout(10000)});
+    assert.equal(response.status,200,path);
+    assert.match(response.headers.get('x-robots-tag') || '',/noindex/);
+    const html = await response.text();
+    assert.match(html,/Centauri Renewables Corporation/);
+    assert.match(html,/https:\/\/www.ctriglobal.com/);
+    if(path === '/contact') {
+      assert.match(html,/PROPOSED ROUTING/);
+      assert.match(html,/No message will be sent/);
+    }
+  }
+  for (const method of ['GET','POST']) {
+    const response = await fetch(base + '/api/inquiry',{method,headers: {'Content-Type':'application/json'},body:method==='POST'?'{"divisionId":"corporate","email":"test@example.com"}':undefined});
+    assert.equal(response.status,503,'inquiry endpoint '+method);
+    assert.match(response.headers.get('x-robots-tag') || '',/noindex/);
+    const body=await response.json();
+    assert.equal(body.code,'CRC_INTAKE_NOT_AUTHORIZED');
+    assert.equal(body.email,undefined);
+  }
+  const sitemap = await fetch(base + '/sitemap.xml');
+  assert.equal(sitemap.status,200);
+  assert.match(await sitemap.text(),/www.ctriglobal.com/);
   const robots = await fetch(base + '/robots.txt');
   assert.equal(robots.status, 200);
   assert.match(await robots.text(), /Disallow: \//);
   for (const path of ['/explore/not-a-real-page', '/explore/__proto__']) {
     assert.equal((await fetch(base + path)).status, 404, path);
   }
-  console.log('PASS: 28 content routes, corporate naming, canonical host, security headers, robots and 404 checks');
+  console.log('PASS: 28 content routes + divisions/solutions/contact, fail-closed intake, sitemap, canonical host and robots');
 } finally {
   if (server.pid) {
     try { process.platform === 'win32' ? server.kill('SIGTERM') : process.kill(-server.pid, 'SIGTERM'); } catch {}
