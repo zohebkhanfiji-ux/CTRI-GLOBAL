@@ -20,7 +20,7 @@ export default function SiteHeader() {
     return () => { window.removeEventListener('keydown', onKey); window.removeEventListener('pointerdown', onPointer); };
   }, []);
   return <header ref={headerRef} className="site-header"><div className="header-inner shell">
-    <Link className="wordmark corporate-wordmark" href="/" aria-label={corporateIdentity.name + ' home'}><span><strong>CENTAURI</strong><small>RENEWABLE CORPORATION</small></span></Link>
+    <Link className="wordmark corporate-wordmark" href="/" aria-label={corporateIdentity.name + ' home'}><span><strong>CENTAURI</strong><small>RENEWABLES CORPORATION</small></span></Link>
     <button ref={menuButtonRef} className="mobile-menu-button" type="button" aria-expanded={open} aria-controls="primary-nav" onClick={() => setOpen(!open)}>{open ? 'Close' : 'Menu'} <span aria-hidden="true">{open ? '×' : '☰'}</span></button>
     <nav id="primary-nav" className={'primary-nav ' + (open ? 'is-open' : '')} aria-label="Primary navigation">
       {groups.map(group => <div className="nav-group" key={group.label}>
