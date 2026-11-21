@@ -6,7 +6,7 @@ import { pages, groups } from '../app/site-data.js';
 const text = p => readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 
 test('exact main-company name and existing domain are authoritative', () => {
-  assert.equal(corporateIdentity.name, 'Centauri Renewable Corporation');
+  assert.equal(corporateIdentity.name, 'Centauri Renewables Corporation');
   assert.equal(corporateIdentity.acronym, 'CRC');
   assert.equal(corporateIdentity.siteUrl, 'https://www.ctriglobal.com');
 });
@@ -25,17 +25,17 @@ test('all three requested manufacturing areas and release qualifications are pre
 });
 test('all existing routes plus manufacturing and Labs are uniquely linked', () => {
   const routes = groups.flatMap(g => g.items);
-  assert.equal(Object.keys(pages).length, 24);
+  assert.equal(Object.keys(pages).length, 27);
   assert.equal(new Set(routes).size, routes.length);
   assert.deepEqual([...routes].sort(), Object.keys(pages).sort());
   for (const item of Object.values(pages)) assert.equal(item.points.length, 3);
 });
 test('rendered copy and metadata do not retain the retired site display name', () => {
   for (const p of ['app/page.js', 'app/layout.js', 'app/site-data.js', 'app/explore/[slug]/page.js', 'components/site-header.js']) {
-    assert.doesNotMatch(text(p), /CTRI\s+GLOBAL|CTRI\s+Global|Centauri Renewables Corporation/, p);
+    assert.doesNotMatch(text(p), /CTRI\s+GLOBAL|CTRI\s+Global|Centauri Renewable Corporation(?!s)/, p);
   }
   assert.match(text('app/layout.js'), /siteName: corporateIdentity.name/);
-  assert.match(text('components/site-header.js'), /RENEWABLE CORPORATION/);
+  assert.match(text('components/site-header.js'), /RENEWABLES CORPORATION/);
 });
 test('indexing and private-editorial approval gates remain unchanged', () => {
   assert.match(text('app/layout.js'), /index: false, follow: false/);
