@@ -23,9 +23,12 @@ try {
     assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
     const html = await response.text();
     assert.ok(html.includes(corporateIdentity.name), path + ' company identity');
-    assert.doesNotMatch(html, /CTRI Global|CTRI GLOBAL|Centauri Renewables Corporation/, path);
+    assert.doesNotMatch(html, /CTRI Global|CTRI GLOBAL|Centauri Renewable Corporation(?!s)/, path);
     assert.ok(html.includes('https://www.ctriglobal.com'), path + ' canonical site');
     if (path === '/') assert.ok(html.includes('<title>' + corporateIdentity.name + '</title>'));
+    if (path === '/explore/energy-america') assert.match(html, /CRM/);
+    if (path === '/explore/ad-astra') assert.match(html, /intelligence/i);
+    if (path === '/explore/mutual-moon') assert.match(html, /privacy/i);
     if (path === '/explore/manufacturing') {
       assert.match(html, /nickel-hydrogen/i);
       assert.match(html, /selenium/i);
@@ -33,13 +36,19 @@ try {
     }
     console.log('PASS ' + path);
   }
+  const divisions = await fetch(base + '/divisions');
+  assert.equal(divisions.status, 200);
+  const divisionsHtml = await divisions.text();
+  assert.match(divisionsHtml, /Centauri Renewables Corporation/);
+  assert.match(divisionsHtml, /Mutual Moon/);
+  assert.match(divisionsHtml, /not yet active/i);
   const robots = await fetch(base + '/robots.txt');
   assert.equal(robots.status, 200);
   assert.match(await robots.text(), /Disallow: \//);
   for (const path of ['/explore/not-a-real-page', '/explore/__proto__']) {
     assert.equal((await fetch(base + path)).status, 404, path);
   }
-  console.log('PASS: 25 content routes, corporate naming, canonical host, security headers, robots and 404 checks');
+  console.log('PASS: 28 content routes, corporate naming, canonical host, security headers, robots and 404 checks');
 } finally {
   if (server.pid) {
     try { process.platform === 'win32' ? server.kill('SIGTERM') : process.kill(-server.pid, 'SIGTERM'); } catch {}
